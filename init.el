@@ -106,8 +106,8 @@
 ;; Header Breadcrumb
 
 ;; JS/TS LSP settings
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-level 2))
+;; (use-package typescript-mode
+;;   :mode "\\.ts\\'"
+;;   :hook (typescript-mode . lsp-deferred)
+;;   :config
+;;   (setq typescript-indent-level 2))
