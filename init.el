@@ -41,6 +41,10 @@
 ;; For trouble shooting
 ;; (use-package command-log-mode)
 
+;; Enavle which-key
+(which-key-mode 1)
+(which-key-setup-side-window-right-bottom)
+
 ;; ivy config
 (use-package ivy
   :diminish
@@ -59,17 +63,51 @@
          ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages '(doom-modeline command-log-mode use-package ivy)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; Doom mode line settings
+
+;; LSP settings
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+  :config
+  (lsp-enable-which-key-integration t))
+
+;; LSP UI setup
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode))
+
+;; Sideline documentation
+(setq lsp-ui-sideline-enable nil)
+(setq lsp-ui-sideline-show-hover nil)
+
+;; Company Mode
+(use-package company
+  :after lsp-mode
+  :hook (prog-mode . company-mode)
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map lsp-mode-map
+         ("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+;; lsp-treemacs
+(use-package lsp-treemacs
+  :after lsp)
+;; lsp-ivy
+(use-package lsp-ivy)
+
+;; Header Breadcrumb
+
+;; JS/TS LSP settings
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-level 2))
