@@ -41,7 +41,7 @@
 ;; For trouble shooting
 ;; (use-package command-log-mode)
 
-;; Enavle which-key
+;; Enable which-key
 (which-key-mode 1)
 (which-key-setup-side-window-right-bottom)
 
