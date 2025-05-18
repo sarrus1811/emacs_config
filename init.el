@@ -105,7 +105,25 @@
 
 ;; Header Breadcrumb
 
+(require 'lsp-mode)
+;; Bash LSP settings
+;; ------------------
+(add-hook 'sh-mode-hook 'lsp)
+(setq lsp-bash-server '("bash-ls"))
+
+;; C/C++ LSP settings
+;; ------------------
+(add-hook 'c-mode-common-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+(setq lsp-clangd-executable "clangd")
+
+;; Go LSP settings
+;; ------------------
+(add-hook 'go-mode-hook 'lsp)
+
+
 ;; JS/TS LSP settings
+;; ------------------
 ;; (use-package typescript-mode
 ;;   :mode "\\.ts\\'"
 ;;   :hook (typescript-mode . lsp-deferred)
