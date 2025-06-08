@@ -67,16 +67,36 @@
 ;; Doom mode line settings
 
 ;; LSP settings
+;; ---------------
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
+  :ensure t
+  ;; Optional: Set the host to be non-blocking for better performance
+  (setq lsp-enable-text-document-did-change t) ; More frequent updates
+  (setq lsp-idle-delay 0.5) ; Lower delay for less lag
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+  :hook (
+         (sh-mode . lsp-deferred)            ; For Bash (using bash-language-server)
+         (ruby-mode . lsp-deferred)          ; For Ruby (using ruby-lsp)
+         ;;(c-mode . lsp-deferred)           ; For C (using clangd)
+         ;;(c++-mode . lsp-deferred)         ; For C++ (using clangd)
+         ;;(python-mode . lsp-deferred)      ; For Python (using pylsp, pyright, etc.)
+         ;;(js-mode . lsp-deferred)          ; For JavaScript (using typescript-language-server, eslint_d, etc.)
+         ;;(typescript-mode . lsp-deferred)  ; For TypeScript
+         ;;(go-mode . lsp-deferred)          ; For Go (using gopls)
+         ;;(rust-mode . lsp-deferred)        ; For Rust (using rust-analyzer)
+         )
   :config
   (lsp-enable-which-key-integration t))
 
 ;; LSP UI setup
 (use-package lsp-ui
+  :ensure t
   :hook (lsp-mode . lsp-ui-mode))
+
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 ;; Sideline documentation
 (setq lsp-ui-sideline-enable nil)
@@ -97,12 +117,6 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
-;; lsp-treemacs
-(use-package lsp-treemacs
-  :after lsp)
-;; lsp-ivy
-(use-package lsp-ivy)
-
 ;; Header Breadcrumb
 
 (require 'lsp-mode)
@@ -121,11 +135,29 @@
 ;; ------------------
 (add-hook 'go-mode-hook 'lsp)
 
+;; Ruby LSP settings
+;;-------------------
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-enable-text-document-did-change t)
+  (setq lsp-idle-delay 0.5)
+  :hook ((ruby-mode . lsp-deferred))
+  :custom
+  (lsp-ruby-lsp-use-bundler t) ;; Set to t if you use bundler to run ruby-lsp
+  ;; If ruby-lsp isn't found, you might need to specify the command:
+  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("bundle" "exec" "ruby-lsp"))))))
+  ;; Or, if using a version manager like rbenv:
+  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("~/.rbenv/shims/ruby-lsp"))))))
+  )
 
 ;; JS/TS LSP settings
 ;; ------------------
-;; (use-package typescript-mode
-;;   :mode "\\.ts\\'"
-;;   :hook (typescript-mode . lsp-deferred)
-;;   :config
-;;   (setq typescript-indent-level 2))
+(use-package typescript-mode
+   :mode "\\.ts\\'"
+   :hook (typescript-mode . lsp-deferred)
+   :config
+   (setq typescript-indent-level 2)
+)
+;;Other settings
+(load-theme 'atom-one-dark t)
