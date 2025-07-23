@@ -166,4 +166,3 @@
    (setq typescript-indent-level 2)
 )
 ;;Other settings
-(load-theme 'atom-one-dark t)
