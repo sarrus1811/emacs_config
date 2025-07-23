@@ -142,14 +142,21 @@
   :init
   (setq lsp-enable-text-document-did-change t)
   (setq lsp-idle-delay 0.5)
-  :hook ((ruby-mode . lsp-deferred))
-  :custom
-  (lsp-ruby-lsp-use-bundler t) ;; Set to t if you use bundler to run ruby-lsp
-  ;; If ruby-lsp isn't found, you might need to specify the command:
-  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("bundle" "exec" "ruby-lsp"))))))
-  ;; Or, if using a version manager like rbenv:
-  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("~/.rbenv/shims/ruby-lsp"))))))
   )
+
+(use-package lsp-mode
+  :hook ((ruby-mode . lsp-deferred))
+  :config
+  (add-to-list 'lsp-language-id-configuration '(ruby-mode . "ruby"))
+  :custom
+  (lsp-ruby-lsp-use-bundler t)
+  ;; In case of auto-detection failing
+  ;; (lsp-register-client
+  ;;  (make-lsp-client :new-connection (lsp-stdio-connection "ruby-lsp")
+  ;;                   :major-modes '(ruby-mode ruby-ts-mode)
+  ;;                   :remote? nil
+  ;;                   :server-id 'ruby-lsp))
+)
 
 ;; JS/TS LSP settings
 ;; ------------------
