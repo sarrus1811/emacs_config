@@ -70,8 +70,8 @@
 ;; ---------------
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :init
   :ensure t
+  :init
   ;; Optional: Set the host to be non-blocking for better performance
   (setq lsp-enable-text-document-did-change t) ; More frequent updates
   (setq lsp-idle-delay 0.5) ; Lower delay for less lag
