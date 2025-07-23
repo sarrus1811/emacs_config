@@ -1,6 +1,5 @@
 (setq inhibit-startup-message t)
 
-
 ;; UI settings
 (global-display-line-numbers-mode 1) ; Display line numbers
 
