@@ -144,9 +144,9 @@
   :hook ((ruby-mode . lsp-deferred))
   :custom
   (lsp-ruby-lsp-use-bundler t) ;; Set to t if you use bundler to run ruby-lsp
-  ;; If ruby-lsp isn't found, you might need to specify the command:
+  ;; If ruby-lsp isn't found specify the command:
   ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("bundle" "exec" "ruby-lsp"))))))
-  ;; Or, if using a version manager like rbenv:
+  ;; For a version manager like rbenv:
   ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("~/.rbenv/shims/ruby-lsp"))))))
   )
 
