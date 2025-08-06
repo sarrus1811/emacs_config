@@ -1,5 +1,6 @@
 (setq inhibit-startup-message t)
 
+
 ;; UI settings
 (global-display-line-numbers-mode 1) ; Display line numbers
 
@@ -69,21 +70,20 @@
 ;; ---------------
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :ensure t
   :init
+  :ensure t
   ;; Optional: Set the host to be non-blocking for better performance
   (setq lsp-enable-text-document-did-change t) ; More frequent updates
   (setq lsp-idle-delay 0.5) ; Lower delay for less lag
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :hook (
-         (sh-mode . lsp-deferred)            ; For Bash (using bash-language-server)
-         (ruby-mode . lsp-deferred)          ; For Ruby (using ruby-lsp)
-         ;;(c-mode . lsp-deferred)           ; For C (using clangd)
-         ;;(c++-mode . lsp-deferred)         ; For C++ (using clangd)
-         ;;(python-mode . lsp-deferred)      ; For Python (using pylsp, pyright, etc.)
-         ;;(js-mode . lsp-deferred)          ; For JavaScript (using typescript-language-server, eslint_d, etc.)
-         ;;(typescript-mode . lsp-deferred)  ; For TypeScript
-         ;;(go-mode . lsp-deferred)          ; For Go (using gopls)
+         (ruby-mode . lsp-deferred)        ; For Ruby (using ruby-lsp)
+	 (c-mode . lsp-deferred)           ; For C (using clangd)
+         (c++-mode . lsp-deferred)         ; For C++ (using clangd)
+         (js-mode . lsp-deferred)          ; For JavaScript (using typescript-language-server, eslint_d, etc.)
+         (typescript-mode . lsp-deferred)  ; For TypeScript
+	 ;;(go-mode . lsp-deferred)          ; For Go (using gopls)
+	 ;;(python-mode . lsp-deferred)      ; For Python (using pylsp, pyright, etc.)
          ;;(rust-mode . lsp-deferred)        ; For Rust (using rust-analyzer)
          )
   :config
@@ -141,21 +141,14 @@
   :init
   (setq lsp-enable-text-document-did-change t)
   (setq lsp-idle-delay 0.5)
-  )
-
-(use-package lsp-mode
   :hook ((ruby-mode . lsp-deferred))
-  :config
-  (add-to-list 'lsp-language-id-configuration '(ruby-mode . "ruby"))
   :custom
-  (lsp-ruby-lsp-use-bundler t)
-  ;; In case of auto-detection failing
-  ;; (lsp-register-client
-  ;;  (make-lsp-client :new-connection (lsp-stdio-connection "ruby-lsp")
-  ;;                   :major-modes '(ruby-mode ruby-ts-mode)
-  ;;                   :remote? nil
-  ;;                   :server-id 'ruby-lsp))
-)
+  (lsp-ruby-lsp-use-bundler t) ;; Set to t if you use bundler to run ruby-lsp
+  ;; If ruby-lsp isn't found, you might need to specify the command:
+  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("bundle" "exec" "ruby-lsp"))))))
+  ;; Or, if using a version manager like rbenv:
+  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("~/.rbenv/shims/ruby-lsp"))))))
+  )
 
 ;; JS/TS LSP settings
 ;; ------------------
