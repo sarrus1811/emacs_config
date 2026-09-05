@@ -1,1 +1,1 @@
-Emacs configuration file
+Emacs configuration
