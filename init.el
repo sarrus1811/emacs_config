@@ -2,23 +2,22 @@
 
 
 ;; UI settings
-(global-display-line-numbers-mode 1) ; Display line numbers
+(global-display-line-numbers-mode 1) ; Line numbers
 
-(scroll-bar-mode -1)        ; Disable scrollbar
-(tool-bar-mode -1)          ; Disable toolbar
-(tooltip-mode -1)           ; Disable tooltips
+(scroll-bar-mode -1)        ; Scrollbar
+(tool-bar-mode -1)          ; Toolbar
+(tooltip-mode -1)           ; Tooltips
 (set-fringe-mode 10)        ; Give some breathing room
-(menu-bar-mode -1)          ; Disable menu bar
+(menu-bar-mode -1)          ; Menu bar
 
 ;; Enable visible bell
 (setq visible-bell t)
 
-;; Font
+;; Fonts
 (set-face-attribute 'default nil :font "JetBrains Mono" :height 110)
 
 ;; Theme
 (load-theme 'tango-dark)
-
 
 ;; Initialize package sources
 (require 'package)
@@ -77,14 +76,14 @@
   (setq lsp-idle-delay 0.5) ; Lower delay for less lag
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :hook (
-         (ruby-mode . lsp-deferred)        ; For Ruby (using ruby-lsp)
-	 (c-mode . lsp-deferred)           ; For C (using clangd)
-         (c++-mode . lsp-deferred)         ; For C++ (using clangd)
-         (js-mode . lsp-deferred)          ; For JavaScript (using typescript-language-server, eslint_d, etc.)
-         (typescript-mode . lsp-deferred)  ; For TypeScript
-	 ;;(go-mode . lsp-deferred)          ; For Go (using gopls)
-	 ;;(python-mode . lsp-deferred)      ; For Python (using pylsp, pyright, etc.)
-         ;;(rust-mode . lsp-deferred)        ; For Rust (using rust-analyzer)
+         (ruby-mode . lsp-deferred)        ; Ruby (using ruby-lsp)
+	 (c-mode . lsp-deferred)           ; C (using clangd)
+         (c++-mode . lsp-deferred)         ; C++ (using clangd)
+         (js-mode . lsp-deferred)          ; JavaScript (using typescript-language-server, eslint_d, etc.)
+         (typescript-mode . lsp-deferred)  ; TypeScript
+	 ;;(go-mode . lsp-deferred)          ; Go
+	 ;;(python-mode . lsp-deferred)      ; Python
+         ;;(rust-mode . lsp-deferred)        ; Rust (rust-analyzer)
          )
   :config
   (lsp-enable-which-key-integration t))
@@ -144,10 +143,8 @@
   :hook ((ruby-mode . lsp-deferred))
   :custom
   (lsp-ruby-lsp-use-bundler t) ;; Set to t if you use bundler to run ruby-lsp
-  ;; If ruby-lsp isn't found specify the command:
+  ;; If ruby-lsp isn't found:
   ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("bundle" "exec" "ruby-lsp"))))))
-  ;; For a version manager like rbenv:
-  ;; (lsp-language-id-configuration '(("ruby" . (("ruby-lsp" . ("~/.rbenv/shims/ruby-lsp"))))))
   )
 
 ;; JS/TS LSP settings
